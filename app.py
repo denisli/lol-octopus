@@ -53,4 +53,4 @@ def predict():
   return jsonify(blueWinProbability=proba[0][0], purpleWinProbability=proba[0][1])
 
 if __name__ == '__main__':
-	app.run(debug=True, host='0.0.0.0')
+	app.run()
