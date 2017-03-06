@@ -1,0 +1,42 @@
+* {
+  text-align: center;
+  font-family: 'Arial', 'Courier New';
+}
+
+table {
+  display: inline-block;
+  width: 50%;
+  border: 2px solid black;
+}
+
+tbody {
+  display: inline-table;
+  width: 100%;
+  margin: auto;
+}
+
+tr {
+  align: center;
+  width: 100%;
+}
+
+tr:nth-child(odd) {
+  background-color: rgba(200, 200, 255, 0.5)
+  background-color: rgba(0, 128, 128, 0.5)
+}
+
+tr:nth-child(even) {
+  background-color: rgba(0, 128, 128, 0.5)
+}
+
+#blue-header {
+  background-color: rgba(0, 0, 255, 0.5)
+}
+
+#purple-header {
+  background-color: rgba(128, 0, 128, 0.5)
+}
+
+button {
+  background-color: yellow;
+}

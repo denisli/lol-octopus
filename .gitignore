@@ -1,0 +1,6 @@
+# do NOT add the API key!
+riot_games_api_key.py
+
+# python binaries
+__pycache__/
+*.pyc

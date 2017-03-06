@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="static/index.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="static/index.js"></script>
+</head>
+<body>
+  <h1>League of Legends Octopus</h1>
+  <p>Fill out the information below to help Octopus predict which team will win.</p>
+  
+  Minute <input id='minute-input' type='text' value='20'/> Second <input id='second-input' type='text' value='0'/>
+  <br><br>
+  <table>
+    <tbody>
+      <tr>
+        <th id='blue-header'>Blue Team</th>
+        <th id='purple-header'>Purple Team</th>
+      </tr>
+      <tr>
+        <td>Total Team Gold</td><td>Total Team Gold</td>
+      </tr>
+      <tr>
+        <td><input id='blue-gold-input' type='text' value='300000'/></td><td><input id='purple-gold-input' type='text' value='300000'/></td>
+      </tr>
+      <tr>
+        <td>Tower Turrets Destroyed on Blue Side</td><td>Tower Turrets Destroyed on Purple Side</td>
+      </tr>
+      <tr>
+        <td><input id='blue-turrets-killed-input' type='text' value='2'/></td><td><input id='purple-turrets-killed-input' type='text' value='2'/></td>
+      </tr>
+      <tr>
+        <td>Inhibitors Destroyed on Blue Side</td><td>Inhibitors Destroyed on Purple Side</td>
+      </tr>
+      <tr>
+        <td><input id='blue-inhibitors-killed-input' type='text' value='0'/></td><td><input id='purple-inhibitors-killed-input' type='text' value='0'/></td>
+      </tr>
+      <tr>
+        <td>Dragons Killed</td><td>Dragons Killed</td>
+      </tr>
+      <tr>
+        <td><input id='blue-dragons-killed-input' type='text' value='0'/></td><td><input id='purple-dragons-killed-input' type='text' value='0'/></td>
+      </tr>
+      <tr>
+        <td>Barons Killed</td><td>Barons Killed</td>
+      </tr>
+      <tr>
+        <td><input id='blue-barons-killed-input' type='text' value='0'/></td><td><input id='purple-barons-killed-input' type='text' value='0'/></td>
+      </tr>
+      <tr>
+        <td>Champion Kills</td><td>Champion Killed</td>
+      </tr>
+      <tr>
+        <td><input id='blue-kills-input' type='text' value='15'/></td><td><input id='purple-kills-input' type='text' value='15'/></td>
+      </tr>
+      <tr>
+        <td>Assists</td><td>Assists</td>
+      </tr>
+      <tr>
+        <td><input id='blue-assists-input' type='text' value='20'/></td><td><input id='purple-assists-input' type='text' value='20'/></td>
+      </tr>
+      <tr>
+        <td>Deaths</td><td>Deaths</td>
+      </tr>
+      <tr>
+        <td><input id='blue-deaths-input' type='text' value='15'/></td><td><input id='purple-deaths-input' type='text' value='15'/></td>
+      </tr>
+    </tbody>
+  </table><br><br>
+  <button id='predict-button'>Get win probability</button>
+  <br>
+  <div id='prediction-div'>
+  </div>
+</body>
+</html>
