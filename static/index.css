@@ -40,3 +40,7 @@ tr:nth-child(even) {
 button {
   background-color: yellow;
 }
+
+#time-span {
+  font-weight: bold
+}
