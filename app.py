@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 
+import os
 import cPickle as pickle
 import json
 import numpy as np
@@ -53,4 +54,6 @@ def predict():
   return jsonify(blueWinProbability=proba[0][0], purpleWinProbability=proba[0][1])
 
 if __name__ == '__main__':
-	app.run()
+  # Bind to PORT if defined, otherwise default to 5000.
+  port = int(os.environ.get('PORT', 5000))
+  app.run(host='0.0.0.0', port=port)
