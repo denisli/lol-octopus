@@ -5,7 +5,7 @@ import bisect
 import json
 import cPickle as pickle
 import feature_vector_extraction
-import feature_vectors_fetcher
+import matches_fetcher
 import octopus
 
 import numpy as np
@@ -13,24 +13,24 @@ import numpy as np
 from riot_games_api_key import API_KEY
 from riot_games_api_params import *
 
-def train_octopus(octopus, feature_vectors_and_classification_for_matches):
+def train_octopus(octopus, match_informations):
   '''
   This method works as long as the first two elements of the tuple at feature
   vectors and classification. There can be more than two elements in the tuple
   '''
   # batch together all of the feature vectors and classifications
   feature_vector_batch = reduce(lambda batch, \
-    feature_vectors_and_classification: batch + feature_vectors_and_classification[0],
-    feature_vectors_and_classification_for_matches, [])
+    match_id: batch + match_informations[match_id]['feature_vectors'],
+    match_informations, [])
   classification_batch = reduce(lambda batch, \
-    feature_vectors_and_classification: batch + [ feature_vectors_and_classification[1], ] * \
-      len(feature_vectors_and_classification[0]),
-    feature_vectors_and_classification_for_matches, [])
+    match_id: batch + [ match_informations[match_id]['classification'], ] * \
+      len(match_informations[match_id]['feature_vectors']),
+    match_informations, [])
 
   # train the octopus with those batches
   octopus.train(np.array(feature_vector_batch), np.array(classification_batch))
 
-def test_octopus(octopus, feature_vectors_and_classification_for_matches):
+def test_octopus(octopus, match_informations):
   '''
   Gets the classification rate of the octopus. The octopus' classification is
   what it thinks the outcome will be 3/4 into the match.
@@ -39,7 +39,8 @@ def test_octopus(octopus, feature_vectors_and_classification_for_matches):
   # 3/4 of the game
   correctly_classified = 0
   total_classified = 0
-  for (feature_vectors, classification, duration) in feature_vectors_and_classification_for_matches:
+  for match_id, match_information in match_informations.iteritems():
+    feature_vectors, classification, duration = match_information['feature_vectors'], match_information['classification'], match_information['duration']
     # search for the feature vector at 3/4 time (or the first one after 3/4 time)
     desired_timestamp = (3 * duration * 1000) / 4
     # unnormalize the time in the feature vectors
@@ -59,36 +60,33 @@ def test_octopus(octopus, feature_vectors_and_classification_for_matches):
   return float(correctly_classified) / total_classified
 
 if __name__ == '__main__':
-  pickle_filename = 'octopus.pkl'
+  print 'Created new octopus'
+  my_octopus = octopus.Octopus()
 
-  # create octopus from pickle if possible
-  if os.path.isfile(pickle_filename):
-    with open(pickle_filename, 'rb') as octopus_pkl:
-      print 'Creating octopus from pickle'
-      my_octopus = pickle.load(octopus_pkl)
-  # if there is no pickle file already, then just create a new one
-  else:
-    print 'Could not find pickle file. Creating new octopus'
-    my_octopus = octopus.Octopus()
+  # # train
+  with open('match_informations.json') as match_informations_json_data:
+    match_informations = json.load(match_informations_json_data)
+    print 'Finished loading match information'
+    train_octopus(my_octopus, match_informations)
+    print 'Finished training octopus'
+  
+  # store the trained octopus
+  pickle_filename = 'octopus3.pkl'
+  with open(pickle_filename, 'wb') as octopus_pkl:
+    pickle.dump(my_octopus, octopus_pkl)
+    print 'Stored octopus in', pickle_filename
 
-  with open('player_ids.json') as json_data:
-    players = json.load(json_data)
+  # test
+  print 'Testing the octopus'
+  with open('player_ids.json') as player_ids_json_data:
+    players = json.load(player_ids_json_data)
 
-    # parameters
-    num_training_matches = 500
-    num_testing_matches = 100
+    # testing parameters
+    num_testing_matches = 101
     time_interval = 30000
-    training_players = players[:len(players)/2]
     testing_players = players[len(players)/2:]
 
-    # train
-    feature_vectors_and_classification_for_matches = feature_vectors_fetcher.get_feature_vectors_and_classification_for_matches(training_players, num_training_matches, time_interval)
-    train_octopus(my_octopus, feature_vectors_and_classification_for_matches)
-    
-    with open('octopus.pkl', 'wb') as octopus_pkl:
-      pickle.dump(my_octopus, octopus_pkl)
-    
     # test
-    feature_vectors_and_classification_for_matches = feature_vectors_fetcher.get_feature_vectors_and_classification_for_matches(testing_players, num_testing_matches, time_interval)
-    rate = test_octopus(my_octopus, feature_vectors_and_classification_for_matches)
+    match_informations = matches_fetcher.get_information_for_matches(testing_players, num_testing_matches, time_interval)
+    rate = test_octopus(my_octopus, match_informations)
     print rate

@@ -18,7 +18,7 @@ The data used by the Octopus was retrieved using the [Riot Games API](https://de
 
 The Octopus was pre-trained with match data. For each match, a set of feature vectors derived from it. Each of those feature vectors should classify to the outcome of the match. Training the Octopus was thus as simple as passing the information to a neural network implementation from scikit-learn.
 
-Only about 500 matches were used for the pre-training of the Octopus. Still, it has a decent prediction rate. During testing, when asked about the outcome of a game at the 3/4 mark, the Octopus produced correct results >75% of the time.
+10,000 matches were used for the pre-training of the Octopus. It seems to have a fairly accurate prediction rate. When asked to predict the outcome of the match 3/4 into it, it could correctly predict the final outcome >80% of the time.
 
 The Octopus does not do any training outside of its pre-training. Indeed, most of the files in this repository are simply scripts to get data and train the octopus using the data.
 
@@ -30,6 +30,7 @@ Since the API did not have a method to get random matches, I roughly followed th
 - [scikit-learn](http://scikit-learn.org/stable/) for probability calculation
 - [Flask](http://flask.pocoo.org/) for web server
 - [HTML/CSS/JavaScript](https://www.w3.org/wiki/The_web_standards_model_-_HTML_CSS_and_JavaScript) for client-side
+- [Heroku](https://www.heroku.com/) for deployment
 
 # Notes
 
