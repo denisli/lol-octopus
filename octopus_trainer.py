@@ -71,7 +71,7 @@ if __name__ == '__main__':
     print 'Finished training octopus'
   
   # store the trained octopus
-  pickle_filename = 'octopus3.pkl'
+  pickle_filename = 'octopus.pkl'
   with open(pickle_filename, 'wb') as octopus_pkl:
     pickle.dump(my_octopus, octopus_pkl)
     print 'Stored octopus in', pickle_filename

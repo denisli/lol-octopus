@@ -99,6 +99,10 @@ def get_feature_vectors(match_detail, time_interval):
     # go through each player to compute the total amount of gold for each
     # team
     participant_frames = frame['participantFrames']
+    # remember to set the gold back to 0 so that we do not add over previous
+    # frames' gold
+    feature_values[BLUE_TEAM_ID]['gold'] = 0
+    feature_values[PURPLE_TEAM_ID]['gold'] = 0
     for participant_id in participant_ids:
       participant_frame = participant_frames[str(participant_id)]
       participant_gold = participant_frame['totalGold']

@@ -8,6 +8,8 @@ An application that calculates the probability of a team winning in a classic Le
 
 Heroku link: [https://lol-octopus.herokuapp.com/](https://lol-octopus.herokuapp.com/)
 
+Note that the first access to the application [will take some loading time](http://stackoverflow.com/questions/2606190/why-are-my-basic-heroku-apps-taking-two-seconds-to-load).
+
 # How to use this?
 
 As you can see in the Heroku application, there are fields to fill in. Fill in all of information from a currently running game, and then click the button below to see how likely each team is going to win.
@@ -18,7 +20,7 @@ The data used by the Octopus was retrieved using the [Riot Games API](https://de
 
 The Octopus was pre-trained with match data. For each match, a set of feature vectors derived from it. Each of those feature vectors should classify to the outcome of the match. Training the Octopus was thus as simple as passing the information to a neural network implementation from scikit-learn.
 
-10,000 matches were used for the pre-training of the Octopus. It seems to have a fairly accurate prediction rate. When asked to predict the outcome of the match 3/4 into it, it could correctly predict the final outcome >80% of the time.
+5,000 matches were used for the pre-training of the Octopus. It seems to have a fairly accurate prediction rate. When asked to predict the outcome of the match 3/4 into it, it could correctly predict the final outcome >80% of the time.
 
 The Octopus does not do any training outside of its pre-training. Indeed, most of the files in this repository are simply scripts to get data and train the octopus using the data.
 

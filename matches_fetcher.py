@@ -93,7 +93,7 @@ def _get_match_request_url(match_id):
   return request_url + parameters
 
 if __name__ == '__main__':
-  num_matches = 10000
+  num_matches = 5000
   time_interval = 30000
   with open('player_ids.json') as json_data:
     players = json.load(json_data)
